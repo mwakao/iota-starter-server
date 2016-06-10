@@ -200,22 +200,25 @@ var _requestSendProbe = function(deviceId, payload, callback){
 	requesting++;
 	debug("now requesting: " + requesting + ", num of queue: " + requestQueue.length);
 // Use driverInsightsProbe.mapMatch if you want to call map match API provided by IBM Watson IoT Context Mapping Service
-//	var mapMatch = driverInsightsProbe.mapMatch;
-	var mapMatch = function(deviceType, deviceId, payload){
-		var m = moment(payload.ts);
-		var prob = {
-				"timestamp": m.format(), // ISO8601
-				"matched_longitude": payload.lng,
-				"matched_latitude": payload.lat,
-				"matched_heading": payload.matched_heading,
-				"matched_link_id": payload.matched_link_id || payload.link_id,
-				"speed": payload.speed,
-				"mo_id": payload.id,
-				"trip_id": payload.trip_id
-			};
-		return Q(prob);
-	};
-	
+	var mapMatch;
+	if(!payload.matched_heading){
+		mapMatch = driverInsightsProbe.mapMatch;
+	}else{
+		mapMatch = function(deviceType, deviceId, payload){
+			var m = moment(payload.ts);
+			var prob = {
+					"timestamp": m.format(), // ISO8601
+					"matched_longitude": payload.lng,
+					"matched_latitude": payload.lat,
+					"matched_heading": payload.matched_heading,
+					"matched_link_id": payload.matched_link_id || payload.link_id,
+					"speed": payload.speed,
+					"mo_id": payload.id,
+					"trip_id": payload.trip_id
+				};
+			return Q(prob);
+		};
+	}
 	mapMatch("Car_Sim", deviceId, payload).then(function(prob){
 		if(!prob.road_type && payload.road_type){
 			prob.road_type = payload.road_type;
