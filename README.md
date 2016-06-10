@@ -13,7 +13,7 @@ You need to install a mobile app on an iOS phone to experience the simulation.
 You can deploy your own instance of IoT Automotive Starter app to Bluemix.
 To do this, you can either use the _Deploy to Bluemix_ button for an automated deployment or follow the steps below to create and deploy your app manually.
 
-[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/ibm-watson-iot/iota-starter-server.git)
+[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/mwakao/iota-starter-server.git)
 
 1. Create a Bluemix Account.
 
